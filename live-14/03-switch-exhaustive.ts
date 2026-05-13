@@ -4,7 +4,7 @@ type Payment =
   | { method: "ewallet"; amount: number; provider: string }
   | { method: "qris"; amount: number; provider: string };
 
-function badCode(p: Payment): string {
+function badCodes(p: Payment): string {
   switch (p.method) {
     case "cash":
       return `Bayar cash: Rp${p.amount}`;
@@ -15,13 +15,13 @@ function badCode(p: Payment): string {
   return "method tidak kenal";
 }
 
-console.log(badCode({ method: "cash", amount: 10000 }));
-console.log(badCode({ method: "card", amount: 20000, cardNumber: "xyz1234" }));
-console.log(badCode({ method: "ewallet", amount: 40000, provider: "Dana" }));
+console.log(badCodes({ method: "cash", amount: 10000 }));
+console.log(badCodes({ method: "card", amount: 20000, cardNumber: "xyz1234" }));
+console.log(badCodes({ method: "ewallet", amount: 40000, provider: "Dana" }));
 
 console.log();
 
-function cleanCode(p: Payment): string {
+function cleanCodes(p: Payment): string {
   switch (p.method) {
     case "cash":
       return `Bayar cash: Rp${p.amount}`;
@@ -38,8 +38,17 @@ function cleanCode(p: Payment): string {
   }
 }
 
-console.log(cleanCode({ method: "cash", amount: 10000 }));
+console.log(cleanCodes({ method: "cash", amount: 10000 }));
 console.log(
-  cleanCode({ method: "card", amount: 20000, cardNumber: "xyz1234" }),
+  cleanCodes({ method: "card", amount: 20000, cardNumber: "xyz1234" }),
 );
-console.log(cleanCode({ method: "ewallet", amount: 40000, provider: "Dana" }));
+console.log(cleanCodes({ method: "ewallet", amount: 40000, provider: "Dana" }));
+
+function handleStatus(p: Payment) {
+  if (p.method === "card") {
+    return `Bayar card ${p.cardNumber}: Rp${p.amount}`;
+  } else if (p.method === "cash") {
+    return `Bayar cash: Rp${p.amount}`;
+  } else {
+  }
+}
